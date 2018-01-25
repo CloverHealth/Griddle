@@ -5,41 +5,43 @@
 
    See License / Disclaimer https://raw.githubusercontent.com/DynamicTyped/Griddle/master/LICENSE
 */
-var React = require('react');
-var GridTable = require('./gridTable.jsx');
-var GridFilter = require('./gridFilter.jsx');
-var GridPagination = require('./gridPagination.jsx');
-var GridSettings = require('./gridSettings.jsx');
-var GridNoData = require('./gridNoData.jsx');
-var GridRow = require('./gridRow.jsx');
-var GridRowContainer = require('./gridRowContainer.jsx');
-var CustomRowComponentContainer = require('./customRowComponentContainer.jsx');
-var CustomPaginationContainer = require('./customPaginationContainer.jsx');
-var CustomFilterContainer = require('./customFilterContainer.jsx');
-var ColumnProperties = require('./columnProperties');
-var RowProperties = require('./rowProperties');
-var deep = require('./deep');
+var React = require("react");
+var createReactClass = require("create-react-class");
+var PropTypes = require("prop-types");
+var GridTable = require("./gridTable.jsx");
+var GridFilter = require("./gridFilter.jsx");
+var GridPagination = require("./gridPagination.jsx");
+var GridSettings = require("./gridSettings.jsx");
+var GridNoData = require("./gridNoData.jsx");
+var GridRow = require("./gridRow.jsx");
+var GridRowContainer = require("./gridRowContainer.jsx");
+var CustomRowComponentContainer = require("./customRowComponentContainer.jsx");
+var CustomPaginationContainer = require("./customPaginationContainer.jsx");
+var CustomFilterContainer = require("./customFilterContainer.jsx");
+var ColumnProperties = require("./columnProperties");
+var RowProperties = require("./rowProperties");
+var deep = require("./deep");
 
-var drop = require('lodash/drop');
-var dropRight = require('lodash/dropRight');
-var find = require('lodash/find');
-var first = require('lodash/take');
-var forEach = require('lodash/forEach');
-var initial = require('lodash/initial');
-var isArray = require('lodash/isArray');
-var isEmpty = require('lodash/isEmpty');
-var isNull = require('lodash/isNull');
-var isUndefined = require('lodash/isUndefined');
-var omit = require('lodash/omit');
-var map = require('lodash/map');
-var extend = require('lodash/assign');
-var _filter = require('lodash/filter');
+var drop = require("lodash/drop");
+var dropRight = require("lodash/dropRight");
+var find = require("lodash/find");
+var first = require("lodash/take");
+var forEach = require("lodash/forEach");
+var initial = require("lodash/initial");
+var isArray = require("lodash/isArray");
+var isEmpty = require("lodash/isEmpty");
+var isNull = require("lodash/isNull");
+var isUndefined = require("lodash/isUndefined");
+var omit = require("lodash/omit");
+var map = require("lodash/map");
+var extend = require("lodash/assign");
+var _filter = require("lodash/filter");
 
-var _orderBy = require('lodash/orderBy');
-var _property = require('lodash/property');
-var _get = require('lodash/get');
+var _orderBy = require("lodash/orderBy");
+var _property = require("lodash/property");
+var _get = require("lodash/get");
 
-var Griddle = React.createClass({
+var Griddle = createReactClass({
     statics: {
         GridTable: GridTable,
         GridFilter: GridFilter,
@@ -50,184 +52,195 @@ var Griddle = React.createClass({
     columnSettings: null,
     rowSettings: null,
     getDefaultProps: function() {
-        return{
-            "columns": [],
-            "gridMetadata": null,
-            "columnMetadata": [],
-            "rowMetadata": null,
-            "results": [], // Used if all results are already loaded.
-            "initialSort": "",
-            "gridClassName":"",
-            "tableClassName":"",
-            "customRowComponentClassName":"",
-            "settingsText": "Settings",
-            "filterPlaceholderText": "Filter Results",
-            "nextText": "Next",
-            "previousText": "Previous",
-            "maxRowsText": "Rows per page",
-            "enableCustomFormatText": "Enable Custom Formatting",
+        return {
+            columns: [],
+            gridMetadata: null,
+            columnMetadata: [],
+            rowMetadata: null,
+            results: [], // Used if all results are already loaded.
+            initialSort: "",
+            gridClassName: "",
+            tableClassName: "",
+            customRowComponentClassName: "",
+            settingsText: "Settings",
+            filterPlaceholderText: "Filter Results",
+            nextText: "Next",
+            previousText: "Previous",
+            maxRowsText: "Rows per page",
+            enableCustomFormatText: "Enable Custom Formatting",
             //this column will determine which column holds subgrid data
             //it will be passed through with the data object but will not be rendered
-            "childrenColumnName": "children",
+            childrenColumnName: "children",
             //Any column in this list will be treated as metadata and will be passed through with the data but won't be rendered
-            "metadataColumns": [],
-            "showFilter": false,
-            "showSettings": false,
-            "useCustomRowComponent": false,
-            "useCustomGridComponent": false,
-            "useCustomPagerComponent": false,
-            "useCustomFilterer": false,
-            "useCustomFilterComponent": false,
-            "useGriddleStyles": true,
-            "useGriddleIcons": true,
-            "customRowComponent": null,
-            "customGridComponent": null,
-            "customPagerComponent": {},
-            "customFilterComponent": null,
-            "customFilterer": null,
-            "globalData": null,
-            "enableToggleCustom":false,
-            "noDataMessage":"There is no data to display.",
-            "noDataClassName": "griddle-nodata",
-            "customNoDataComponent": null,
-            "allowEmptyGrid": false,
-            "showTableHeading":true,
-            "showPager":true,
-            "useFixedHeader":false,
-            "useExternal": false,
-            "externalSetPage": null,
-            "externalChangeSort": null,
-            "externalSetFilter": null,
-            "externalSetPageSize":null,
-            "externalMaxPage":null,
-            "externalCurrentPage": null,
-            "externalSortColumn": null,
-            "externalSortAscending": true,
-            "externalLoadingComponent": null,
-            "externalIsLoading": false,
-            "enableInfiniteScroll": false,
-            "bodyHeight": null,
-            "paddingHeight": 5,
-            "rowHeight": 25,
-            "infiniteScrollLoadTreshold": 50,
-            "useFixedLayout": true,
-            "isSubGriddle": false,
-            "enableSort": true,
-            "onRowClick": null,
+            metadataColumns: [],
+            showFilter: false,
+            showSettings: false,
+            useCustomRowComponent: false,
+            useCustomGridComponent: false,
+            useCustomPagerComponent: false,
+            useCustomFilterer: false,
+            useCustomFilterComponent: false,
+            useGriddleStyles: true,
+            useGriddleIcons: true,
+            customRowComponent: null,
+            customGridComponent: null,
+            customPagerComponent: {},
+            customFilterComponent: null,
+            customFilterer: null,
+            globalData: null,
+            enableToggleCustom: false,
+            noDataMessage: "There is no data to display.",
+            noDataClassName: "griddle-nodata",
+            customNoDataComponent: null,
+            allowEmptyGrid: false,
+            showTableHeading: true,
+            showPager: true,
+            useFixedHeader: false,
+            useExternal: false,
+            externalSetPage: null,
+            externalChangeSort: null,
+            externalSetFilter: null,
+            externalSetPageSize: null,
+            externalMaxPage: null,
+            externalCurrentPage: null,
+            externalSortColumn: null,
+            externalSortAscending: true,
+            externalLoadingComponent: null,
+            externalIsLoading: false,
+            enableInfiniteScroll: false,
+            bodyHeight: null,
+            paddingHeight: 5,
+            rowHeight: 25,
+            infiniteScrollLoadTreshold: 50,
+            useFixedLayout: true,
+            isSubGriddle: false,
+            enableSort: true,
+            onRowClick: null,
             /* css class names */
-            "sortAscendingClassName": "sort-ascending",
-            "sortDescendingClassName": "sort-descending",
-            "parentRowCollapsedClassName": "parent-row",
-            "parentRowExpandedClassName": "parent-row expanded",
-            "settingsToggleClassName": "settings",
-            "nextClassName": "griddle-next",
-            "previousClassName": "griddle-previous",
-            "headerStyles": {},
+            sortAscendingClassName: "sort-ascending",
+            sortDescendingClassName: "sort-descending",
+            parentRowCollapsedClassName: "parent-row",
+            parentRowExpandedClassName: "parent-row expanded",
+            settingsToggleClassName: "settings",
+            nextClassName: "griddle-next",
+            previousClassName: "griddle-previous",
+            headerStyles: {},
             /* icon components */
-            "sortAscendingComponent": " ▲",
-            "sortDescendingComponent": " ▼",
-            "sortDefaultComponent":null,
-            "parentRowCollapsedComponent": "▶",
-            "parentRowExpandedComponent": "▼",
-            "settingsIconComponent": "",
-            "nextIconComponent": "",
-            "previousIconComponent":"",
-            "isMultipleSelection": false, //currently does not support subgrids
-            "selectedRowIds": [],
-            "uniqueIdentifier": "id"
+            sortAscendingComponent: " ▲",
+            sortDescendingComponent: " ▼",
+            sortDefaultComponent: null,
+            parentRowCollapsedComponent: "▶",
+            parentRowExpandedComponent: "▼",
+            settingsIconComponent: "",
+            nextIconComponent: "",
+            previousIconComponent: "",
+            isMultipleSelection: false, //currently does not support subgrids
+            selectedRowIds: [],
+            uniqueIdentifier: "id"
         };
     },
     propTypes: {
-        isMultipleSelection: React.PropTypes.bool,
-        selectedRowIds: React.PropTypes.oneOfType([
-            React.PropTypes.arrayOf(React.PropTypes.number),
-            React.PropTypes.arrayOf(React.PropTypes.string)
+        isMultipleSelection: PropTypes.bool,
+        selectedRowIds: PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.number),
+            PropTypes.arrayOf(PropTypes.string)
         ]),
-        uniqueIdentifier: React.PropTypes.string
+        uniqueIdentifier: PropTypes.string
     },
     defaultFilter: function(results, filter) {
-      return _filter(results,
-      function(item) {
-           var arr = deep.keys(item);
-           for(var i = 0; i < arr.length; i++){
-              if ((deep.getAt(item, arr[i]) || "").toString().toLowerCase().indexOf(filter.toLowerCase()) >= 0){
-               return true;
-              }
-           }
-           return false;
-       });
+        return _filter(results, function(item) {
+            var arr = deep.keys(item);
+            for (var i = 0; i < arr.length; i++) {
+                if (
+                    (deep.getAt(item, arr[i]) || "")
+                        .toString()
+                        .toLowerCase()
+                        .indexOf(filter.toLowerCase()) >= 0
+                ) {
+                    return true;
+                }
+            }
+            return false;
+        });
     },
 
     filterByColumnFilters(columnFilters) {
-      var filteredResults = Object.keys(columnFilters).reduce(function(previous, current) {
-        return _filter(
-          previous,
-          function(item) {
-            if(deep.getAt(item, current || "").toString().toLowerCase().indexOf(columnFilters[current].toLowerCase()) >= 0) {
-              return true;
-            }
+        var filteredResults = Object.keys(columnFilters).reduce(function(
+            previous,
+            current
+        ) {
+            return _filter(previous, function(item) {
+                if (
+                    deep
+                        .getAt(item, current || "")
+                        .toString()
+                        .toLowerCase()
+                        .indexOf(columnFilters[current].toLowerCase()) >= 0
+                ) {
+                    return true;
+                }
 
-            return false;
-          }
-        )
-      }, this.props.results)
+                return false;
+            });
+        },
+        this.props.results);
 
-      var newState = {
-        columnFilters: columnFilters
-      };
+        var newState = {
+            columnFilters: columnFilters
+        };
 
-      if(columnFilters) {
-        newState.filteredResults = filteredResults;
-        newState.maxPage = this.getMaxPage(newState.filteredResults);
-      } else if(this.state.filter) {
-        newState.filteredResults = this.props.useCustomFilterer ?
-          this.props.customFilterer(this.props.results, filter) :
-          this.defaultFilter(this.props.results, filter);
-      } else {
-        newState.filteredResults = null;
-      }
+        if (columnFilters) {
+            newState.filteredResults = filteredResults;
+            newState.maxPage = this.getMaxPage(newState.filteredResults);
+        } else if (this.state.filter) {
+            newState.filteredResults = this.props.useCustomFilterer
+                ? this.props.customFilterer(this.props.results, filter)
+                : this.defaultFilter(this.props.results, filter);
+        } else {
+            newState.filteredResults = null;
+        }
 
-      this.setState(newState);
+        this.setState(newState);
     },
 
     filterByColumn: function(filter, column) {
-      var columnFilters = this.state.columnFilters;
+        var columnFilters = this.state.columnFilters;
 
-      //if filter is "" remove it from the columnFilters object
-      if(columnFilters.hasOwnProperty(column) && !filter) {
-        columnFilters = omit(columnFilters, column);
-      } else {
-        var newObject = {};
-        newObject[column] = filter;
-        columnFilters = extend({}, columnFilters, newObject);
-      }
+        //if filter is "" remove it from the columnFilters object
+        if (columnFilters.hasOwnProperty(column) && !filter) {
+            columnFilters = omit(columnFilters, column);
+        } else {
+            var newObject = {};
+            newObject[column] = filter;
+            columnFilters = extend({}, columnFilters, newObject);
+        }
 
-      this.filterByColumnFilters(columnFilters);
+        this.filterByColumnFilters(columnFilters);
     },
 
     /* if we have a filter display the max page and results accordingly */
     setFilter: function(filter) {
-        if(this.props.useExternal) {
+        if (this.props.useExternal) {
             this.props.externalSetFilter(filter);
             return;
         }
 
         var that = this,
-        updatedState = {
-            page: 0,
-            filter: filter
-        };
+            updatedState = {
+                page: 0,
+                filter: filter
+            };
 
         // Obtain the state results.
-        updatedState.filteredResults = this.props.useCustomFilterer ?
-          this.props.customFilterer(this.props.results, filter) :
-          this.defaultFilter(this.props.results, filter);
+        updatedState.filteredResults = this.props.useCustomFilterer
+            ? this.props.customFilterer(this.props.results, filter)
+            : this.defaultFilter(this.props.results, filter);
 
         // Update the max page.
         updatedState.maxPage = that.getMaxPage(updatedState.filteredResults);
 
         //if filter is null or undefined reset the filter.
-        if (isUndefined(filter) || isNull(filter) || isEmpty(filter)){
+        if (isUndefined(filter) || isNull(filter) || isEmpty(filter)) {
             updatedState.filter = filter;
             updatedState.filteredResults = null;
         }
@@ -235,10 +248,10 @@ var Griddle = React.createClass({
         // Set the state.
         that.setState(updatedState);
 
-		this._resetSelectedRows();
+        this._resetSelectedRows();
     },
-    setPageSize: function(size){
-        if(this.props.useExternal) {
+    setPageSize: function(size) {
+        if (this.props.useExternal) {
             this.props.externalSetPageSize(size);
             return;
         }
@@ -247,81 +260,91 @@ var Griddle = React.createClass({
         this.state.resultsPerPage = size;
         this.setMaxPage();
     },
-    toggleColumnChooser: function(){
+    toggleColumnChooser: function() {
         this.setState({
             showColumnChooser: !this.state.showColumnChooser
         });
     },
     isNullOrUndefined: function(value) {
-      return (value === undefined || value === null)
+        return value === undefined || value === null;
     },
     shouldUseCustomRowComponent: function() {
-      return this.isNullOrUndefined(this.state.useCustomRowComponent) ?
-        this.props.useCustomRowComponent :
-        this.state.useCustomRowComponent
+        return this.isNullOrUndefined(this.state.useCustomRowComponent)
+            ? this.props.useCustomRowComponent
+            : this.state.useCustomRowComponent;
     },
     shouldUseCustomGridComponent: function() {
-      return this.isNullOrUndefined(this.state.useCustomGridComponent) ?
-        this.props.useCustomGridComponent :
-        this.state.useCustomGridComponent
+        return this.isNullOrUndefined(this.state.useCustomGridComponent)
+            ? this.props.useCustomGridComponent
+            : this.state.useCustomGridComponent;
     },
-    toggleCustomComponent: function(){
-        if(this.state.customComponentType === "grid"){
+    toggleCustomComponent: function() {
+        if (this.state.customComponentType === "grid") {
             this.setState({
                 useCustomGridComponent: !this.shouldUseCustomGridComponent()
             });
-        } else if(this.state.customComponentType === "row"){
+        } else if (this.state.customComponentType === "row") {
             this.setState({
                 useCustomRowComponent: !this.shouldUseCustomRowComponent()
             });
         }
     },
-    getMaxPage: function(results, totalResults){
-        if(this.props.useExternal){
-          return this.props.externalMaxPage;
+    getMaxPage: function(results, totalResults) {
+        if (this.props.useExternal) {
+            return this.props.externalMaxPage;
         }
 
         if (!totalResults) {
-          totalResults = (results||this.getCurrentResults()).length;
+            totalResults = (results || this.getCurrentResults()).length;
         }
         var maxPage = Math.ceil(totalResults / this.state.resultsPerPage);
         return maxPage;
     },
-    setMaxPage: function(results){
+    setMaxPage: function(results) {
         var maxPage = this.getMaxPage(results);
         //re-render if we have new max page value
-        if (this.state.maxPage !== maxPage){
-          this.setState({page: 0, maxPage: maxPage, filteredColumns: this.columnSettings.filteredColumns });
+        if (this.state.maxPage !== maxPage) {
+            this.setState({
+                page: 0,
+                maxPage: maxPage,
+                filteredColumns: this.columnSettings.filteredColumns
+            });
         }
     },
     setPage: function(number) {
-        if(this.props.useExternal) {
+        if (this.props.useExternal) {
             this.props.externalSetPage(number);
             return;
         }
 
         //check page size and move the filteredResults to pageSize * pageNumber
-        if (number * this.state.resultsPerPage <= this.state.resultsPerPage * this.state.maxPage) {
+        if (
+            number * this.state.resultsPerPage <=
+            this.state.resultsPerPage * this.state.maxPage
+        ) {
             var that = this,
                 state = {
                     page: number
                 };
 
-                that.setState(state);
+            that.setState(state);
         }
 
-		//When infinite scrolling is enabled, uncheck the "select all" checkbox, since more unchecked rows will be appended at the end
-		if(this.props.enableInfiniteScroll) {
-			this.setState({
-				isSelectAllChecked: false
-			})
-		} else { //When the paging is done on the server, the previously selected rows on a certain page might not
-			// coincide with the new rows on that exact page page, if moving back and forth. Better reset the selection
-			this._resetSelectedRows();
-		}
+        //When infinite scrolling is enabled, uncheck the "select all" checkbox, since more unchecked rows will be appended at the end
+        if (this.props.enableInfiniteScroll) {
+            this.setState({
+                isSelectAllChecked: false
+            });
+        } else {
+            //When the paging is done on the server, the previously selected rows on a certain page might not
+            // coincide with the new rows on that exact page page, if moving back and forth. Better reset the selection
+            this._resetSelectedRows();
+        }
     },
-    setColumns: function(columns){
-        this.columnSettings.filteredColumns = isArray(columns) ? columns : [columns];
+    setColumns: function(columns) {
+        this.columnSettings.filteredColumns = isArray(columns)
+            ? columns
+            : [columns];
 
         this.setState({
             filteredColumns: this.columnSettings.filteredColumns
@@ -329,24 +352,40 @@ var Griddle = React.createClass({
     },
     nextPage: function() {
         var currentPage = this.getCurrentPage();
-        if (currentPage < this.getCurrentMaxPage() - 1) { this.setPage(currentPage + 1); }
+        if (currentPage < this.getCurrentMaxPage() - 1) {
+            this.setPage(currentPage + 1);
+        }
     },
     previousPage: function() {
-      var currentPage = this.getCurrentPage();
-        if (currentPage > 0) { this.setPage(currentPage - 1); }
+        var currentPage = this.getCurrentPage();
+        if (currentPage > 0) {
+            this.setPage(currentPage - 1);
+        }
     },
-    changeSort: function (column) {
-        if(this.props.enableSort === false){ return; }
-
-        if(this.props.useExternal) {
-            this.props.externalChangeSort(column, this.props.externalSortColumn === column ? !this.props.externalSortAscending : true);
+    changeSort: function(column) {
+        if (this.props.enableSort === false) {
             return;
         }
-        var columnMeta = find(this.props.columnMetadata, { columnName: column }) || {};
-        var sortDirectionCycle = columnMeta.sortDirectionCycle ? columnMeta.sortDirectionCycle : [null, 'asc', 'desc'];
+
+        if (this.props.useExternal) {
+            this.props.externalChangeSort(
+                column,
+                this.props.externalSortColumn === column
+                    ? !this.props.externalSortAscending
+                    : true
+            );
+            return;
+        }
+        var columnMeta =
+            find(this.props.columnMetadata, { columnName: column }) || {};
+        var sortDirectionCycle = columnMeta.sortDirectionCycle
+            ? columnMeta.sortDirectionCycle
+            : [null, "asc", "desc"];
         var sortDirection = null;
         // Find the current position in the cycle (or -1).
-        var i = sortDirectionCycle.indexOf(this.state.sortDirection ? this.state.sortDirection : null);
+        var i = sortDirectionCycle.indexOf(
+            this.state.sortDirection ? this.state.sortDirection : null
+        );
         // Proceed to the next position in the cycle (or start at the beginning).
         i = (i + 1) % sortDirectionCycle.length;
 
@@ -357,57 +396,62 @@ var Griddle = React.createClass({
         }
 
         var state = {
-            page:0,
+            page: 0,
             sortColumn: column,
             sortDirection: sortDirection
         };
 
         this.setState(state);
 
-		//When the sorting is done on the server, the previously selected rows might not correspond with the new ones.
-		//Better reset the selection
-		this._resetSelectedRows();
+        //When the sorting is done on the server, the previously selected rows might not correspond with the new ones.
+        //Better reset the selection
+        this._resetSelectedRows();
     },
     componentWillReceiveProps: function(nextProps) {
         this.setMaxPage(nextProps.results);
         if (nextProps.resultsPerPage !== this.props.resultsPerPage) {
             this.setPageSize(nextProps.resultsPerPage);
         }
-	    //This will updaet the column Metadata
-	    this.columnSettings.columnMetadata = nextProps.columnMetadata;
-        if(nextProps.results.length > 0)
-        {
+        //This will updaet the column Metadata
+        this.columnSettings.columnMetadata = nextProps.columnMetadata;
+        if (nextProps.results.length > 0) {
             var deepKeys = deep.keys(nextProps.results[0]);
 
-            var is_same = (this.columnSettings.allColumns.length == deepKeys.length) && this.columnSettings.allColumns.every(function(element, index) {
-                return element === deepKeys[index];
-            });
+            var is_same =
+                this.columnSettings.allColumns.length == deepKeys.length &&
+                this.columnSettings.allColumns.every(function(element, index) {
+                    return element === deepKeys[index];
+                });
 
-            if(!is_same) {
+            if (!is_same) {
                 this.columnSettings.allColumns = deepKeys;
             }
-        }
-        else if(this.columnSettings.allColumns.length > 0)
-        {
+        } else if (this.columnSettings.allColumns.length > 0) {
             this.columnSettings.allColumns = [];
         }
 
-        if(nextProps.columns !== this.columnSettings.filteredColumns){
+        if (nextProps.columns !== this.columnSettings.filteredColumns) {
             this.columnSettings.filteredColumns = nextProps.columns;
         }
 
-
-        if(nextProps.selectedRowIds) {
-            var visibleRows = this.getDataForRender(this.getCurrentResults(), this.columnSettings.getColumns(), true);
+        if (nextProps.selectedRowIds) {
+            var visibleRows = this.getDataForRender(
+                this.getCurrentResults(),
+                this.columnSettings.getColumns(),
+                true
+            );
 
             this.setState({
-                isSelectAllChecked: this._getAreAllRowsChecked(nextProps.selectedRowIds, map(visibleRows, this.props.uniqueIdentifier)),
+                isSelectAllChecked: this._getAreAllRowsChecked(
+                    nextProps.selectedRowIds,
+                    map(visibleRows, this.props.uniqueIdentifier)
+                ),
                 selectedRowIds: nextProps.selectedRowIds
             });
         }
     },
     getInitialState: function() {
-        var state =  {
+        var state = {
             maxPage: 0,
             page: 0,
             filteredResults: null,
@@ -417,8 +461,8 @@ var Griddle = React.createClass({
             columnFilters: {},
             resultsPerPage: this.props.resultsPerPage || 5,
             showColumnChooser: false,
-			isSelectAllChecked: false,
-			selectedRowIds: this.props.selectedRowIds
+            isSelectAllChecked: false,
+            selectedRowIds: this.props.selectedRowIds
         };
         return state;
     },
@@ -427,7 +471,9 @@ var Griddle = React.createClass({
         this.verifyCustom();
 
         this.columnSettings = new ColumnProperties(
-            this.props.results.length > 0 ? deep.keys(this.props.results[0]) : [],
+            this.props.results.length > 0
+                ? deep.keys(this.props.results[0])
+                : [],
             this.props.columns,
             this.props.childrenColumnName,
             this.props.columnMetadata,
@@ -436,9 +482,10 @@ var Griddle = React.createClass({
 
         this.rowSettings = new RowProperties(
             this.props.rowMetadata,
-            (this.props.useCustomTableRowComponent && this.props.customTableRowComponent) ?
-                this.props.customTableRowComponent :
-                GridRow,
+            this.props.useCustomTableRowComponent &&
+            this.props.customTableRowComponent
+                ? this.props.customTableRowComponent
+                : GridRow,
             this.props.useCustomTableRowComponent
         );
 
@@ -448,146 +495,217 @@ var Griddle = React.createClass({
         this.setMaxPage();
 
         //don't like the magic strings
-        if(this.shouldUseCustomGridComponent()){
+        if (this.shouldUseCustomGridComponent()) {
             this.setState({
-                 customComponentType: "grid"
+                customComponentType: "grid"
             });
-        } else if(this.shouldUseCustomRowComponent()){
+        } else if (this.shouldUseCustomRowComponent()) {
             this.setState({
                 customComponentType: "row"
             });
         } else {
-          this.setState({
-            filteredColumns: this.columnSettings.filteredColumns
-          })
+            this.setState({
+                filteredColumns: this.columnSettings.filteredColumns
+            });
         }
-
     },
     //todo: clean these verify methods up
-    verifyExternal: function(){
-        if(this.props.useExternal === true){
+    verifyExternal: function() {
+        if (this.props.useExternal === true) {
             //hooray for big ugly nested if
-            if(this.props.externalSetPage === null){
-                console.error("useExternal is set to true but there is no externalSetPage function specified.");
+            if (this.props.externalSetPage === null) {
+                console.error(
+                    "useExternal is set to true but there is no externalSetPage function specified."
+                );
             }
 
-            if(this.props.externalChangeSort === null){
-                console.error("useExternal is set to true but there is no externalChangeSort function specified.");
+            if (this.props.externalChangeSort === null) {
+                console.error(
+                    "useExternal is set to true but there is no externalChangeSort function specified."
+                );
             }
 
-            if(this.props.externalSetFilter === null){
-                console.error("useExternal is set to true but there is no externalSetFilter function specified.");
+            if (this.props.externalSetFilter === null) {
+                console.error(
+                    "useExternal is set to true but there is no externalSetFilter function specified."
+                );
             }
 
-            if(this.props.externalSetPageSize === null){
-                console.error("useExternal is set to true but there is no externalSetPageSize function specified.");
+            if (this.props.externalSetPageSize === null) {
+                console.error(
+                    "useExternal is set to true but there is no externalSetPageSize function specified."
+                );
             }
 
-            if(this.props.externalMaxPage === null){
-                console.error("useExternal is set to true but externalMaxPage is not set.");
+            if (this.props.externalMaxPage === null) {
+                console.error(
+                    "useExternal is set to true but externalMaxPage is not set."
+                );
             }
 
-            if(this.props.externalCurrentPage === null){
-                console.error("useExternal is set to true but externalCurrentPage is not set. Griddle will not page correctly without that property when using external data.");
+            if (this.props.externalCurrentPage === null) {
+                console.error(
+                    "useExternal is set to true but externalCurrentPage is not set. Griddle will not page correctly without that property when using external data."
+                );
             }
         }
     },
     //TODO: Do this with propTypes
-    verifyCustom: function(){
-        if(this.props.useCustomGridComponent === true && this.props.customGridComponent === null){
-            console.error("useCustomGridComponent is set to true but no custom component was specified.")
+    verifyCustom: function() {
+        if (
+            this.props.useCustomGridComponent === true &&
+            this.props.customGridComponent === null
+        ) {
+            console.error(
+                "useCustomGridComponent is set to true but no custom component was specified."
+            );
         }
-        if (this.props.useCustomRowComponent === true && this.props.customRowComponent === null){
-            console.error("useCustomRowComponent is set to true but no custom component was specified.")
+        if (
+            this.props.useCustomRowComponent === true &&
+            this.props.customRowComponent === null
+        ) {
+            console.error(
+                "useCustomRowComponent is set to true but no custom component was specified."
+            );
         }
-        if(this.props.useCustomGridComponent === true && this.props.useCustomRowComponent === true){
-            console.error("Cannot currently use both customGridComponent and customRowComponent.");
+        if (
+            this.props.useCustomGridComponent === true &&
+            this.props.useCustomRowComponent === true
+        ) {
+            console.error(
+                "Cannot currently use both customGridComponent and customRowComponent."
+            );
         }
-        if(this.props.useCustomFilterer === true && this.props.customFilterer === null){
-            console.error("useCustomFilterer is set to true but no custom filter function was specified.");
+        if (
+            this.props.useCustomFilterer === true &&
+            this.props.customFilterer === null
+        ) {
+            console.error(
+                "useCustomFilterer is set to true but no custom filter function was specified."
+            );
         }
-        if(this.props.useCustomFilterComponent === true && this.props.customFilterComponent === null){
-            console.error("useCustomFilterComponent is set to true but no customFilterComponent was specified.");
+        if (
+            this.props.useCustomFilterComponent === true &&
+            this.props.customFilterComponent === null
+        ) {
+            console.error(
+                "useCustomFilterComponent is set to true but no customFilterComponent was specified."
+            );
         }
     },
-    getDataForRender: function(data, cols, pageList){
+    getDataForRender: function(data, cols, pageList) {
         var that = this;
 
-            // get the correct page size
-            if(this.state.sortColumn !== "") {
-                var column = this.state.sortColumn;
-                var sortColumn = _filter(this.props.columnMetadata, {columnName: column});
-                var customCompareFn;
-                var multiSort = {
-                    columns: [],
-                    orders: []
-                };
-                
-                if (sortColumn.length > 0) {
-                    customCompareFn = sortColumn[0].hasOwnProperty("customCompareFn") && sortColumn[0]["customCompareFn"];
-                    if (sortColumn[0]["multiSort"]) {
-                        multiSort = sortColumn[0]["multiSort"];
-                    }
+        // get the correct page size
+        if (this.state.sortColumn !== "") {
+            var column = this.state.sortColumn;
+            var sortColumn = _filter(this.props.columnMetadata, {
+                columnName: column
+            });
+            var customCompareFn;
+            var multiSort = {
+                columns: [],
+                orders: []
+            };
+
+            if (sortColumn.length > 0) {
+                customCompareFn =
+                    sortColumn[0].hasOwnProperty("customCompareFn") &&
+                    sortColumn[0]["customCompareFn"];
+                if (sortColumn[0]["multiSort"]) {
+                    multiSort = sortColumn[0]["multiSort"];
                 }
+            }
 
-                if (this.state.sortDirection) {
-                    if (typeof customCompareFn === 'function') {
-                        if (customCompareFn.length === 2) {
-                            data = data.sort(function (a, b) {
-                                return customCompareFn(_get(a, column), _get(b, column));
-                            });
-
-                            if(sortDirection === 'desc') {
-                                data.reverse();
-                            }
-                        } else if (customCompareFn.length === 1) {
-                            data = _orderBy(data, function (item) {
-                                return customCompareFn(_get(item, column));
-                            }, [this.state.sortDirection]);
-                        }
-                    } else {
-                        var iteratees = [_property(column)];
-                        var orders = [this.state.sortDirection];
-                        multiSort.columns.forEach((col, i) => {
-                            iteratees.push(_property(col));
-                            if (multiSort.orders[i] === 'asc' ||
-                                multiSort.orders[i] === 'desc') {
-                                orders.push(multiSort.orders[i]);
-                            } else {
-                                orders.push(this.state.sortDirection);
-                            }
+            if (this.state.sortDirection) {
+                if (typeof customCompareFn === "function") {
+                    if (customCompareFn.length === 2) {
+                        data = data.sort(function(a, b) {
+                            return customCompareFn(
+                                _get(a, column),
+                                _get(b, column)
+                            );
                         });
 
-                        data = _orderBy(data, iteratees, orders);
+                        if (sortDirection === "desc") {
+                            data.reverse();
+                        }
+                    } else if (customCompareFn.length === 1) {
+                        data = _orderBy(
+                            data,
+                            function(item) {
+                                return customCompareFn(_get(item, column));
+                            },
+                            [this.state.sortDirection]
+                        );
                     }
-                }
-            }
-
-            var currentPage = this.getCurrentPage();
-
-            if (!this.props.useExternal && pageList && (this.state.resultsPerPage * (currentPage+1) <= this.state.resultsPerPage * this.state.maxPage) && (currentPage >= 0)) {
-                if (this.isInfiniteScrollEnabled()) {
-                  // If we're doing infinite scroll, grab all results up to the current page.
-                  data = first(data, (currentPage + 1) * this.state.resultsPerPage);
                 } else {
-                  //the 'rest' is grabbing the whole array from index on and the 'initial' is getting the first n results
-                  var rest = drop(data, currentPage * this.state.resultsPerPage);
-                  data = (dropRight || initial)(rest, rest.length-this.state.resultsPerPage);
+                    var iteratees = [_property(column)];
+                    var orders = [this.state.sortDirection];
+                    multiSort.columns.forEach((col, i) => {
+                        iteratees.push(_property(col));
+                        if (
+                            multiSort.orders[i] === "asc" ||
+                            multiSort.orders[i] === "desc"
+                        ) {
+                            orders.push(multiSort.orders[i]);
+                        } else {
+                            orders.push(this.state.sortDirection);
+                        }
+                    });
+
+                    data = _orderBy(data, iteratees, orders);
                 }
             }
+        }
+
+        var currentPage = this.getCurrentPage();
+
+        if (
+            !this.props.useExternal &&
+            pageList &&
+            this.state.resultsPerPage * (currentPage + 1) <=
+                this.state.resultsPerPage * this.state.maxPage &&
+            currentPage >= 0
+        ) {
+            if (this.isInfiniteScrollEnabled()) {
+                // If we're doing infinite scroll, grab all results up to the current page.
+                data = first(
+                    data,
+                    (currentPage + 1) * this.state.resultsPerPage
+                );
+            } else {
+                //the 'rest' is grabbing the whole array from index on and the 'initial' is getting the first n results
+                var rest = drop(data, currentPage * this.state.resultsPerPage);
+                data = (dropRight || initial)(
+                    rest,
+                    rest.length - this.state.resultsPerPage
+                );
+            }
+        }
 
         var meta = this.columnSettings.getMetadataColumns;
 
         var transformedData = [];
 
-        for(var i = 0; i<data.length; i++){
+        for (var i = 0; i < data.length; i++) {
             var mappedData = data[i];
 
-            if(typeof mappedData[that.props.childrenColumnName] !== "undefined" && mappedData[that.props.childrenColumnName].length > 0){
+            if (
+                typeof mappedData[that.props.childrenColumnName] !==
+                    "undefined" &&
+                mappedData[that.props.childrenColumnName].length > 0
+            ) {
                 //internally we're going to use children instead of whatever it is so we don't have to pass the custom name around
-                mappedData["children"] = that.getDataForRender(mappedData[that.props.childrenColumnName], cols, false);
+                mappedData["children"] = that.getDataForRender(
+                    mappedData[that.props.childrenColumnName],
+                    cols,
+                    false
+                );
 
-                if(that.props.childrenColumnName !== "children") { delete mappedData[that.props.childrenColumnName]; }
+                if (that.props.childrenColumnName !== "children") {
+                    delete mappedData[that.props.childrenColumnName];
+                }
             }
 
             transformedData.push(mappedData);
@@ -595,23 +713,29 @@ var Griddle = React.createClass({
         return transformedData;
     },
     //this is the current results
-    getCurrentResults: function(){
-      return this.state.filteredResults || this.props.results;
+    getCurrentResults: function() {
+        return this.state.filteredResults || this.props.results;
     },
-    getCurrentPage: function(){
-      return this.props.externalCurrentPage||this.state.page;
+    getCurrentPage: function() {
+        return this.props.externalCurrentPage || this.state.page;
     },
-    getCurrentSort: function(){
-        return this.props.useExternal ? this.props.externalSortColumn : this.state.sortColumn;
+    getCurrentSort: function() {
+        return this.props.useExternal
+            ? this.props.externalSortColumn
+            : this.state.sortColumn;
     },
-    getCurrentSortAscending: function(){
-        return this.props.useExternal ? this.props.externalSortAscending : this.state.sortDirection === 'asc';
+    getCurrentSortAscending: function() {
+        return this.props.useExternal
+            ? this.props.externalSortAscending
+            : this.state.sortDirection === "asc";
     },
-    getCurrentMaxPage: function(){
-        return this.props.useExternal ? this.props.externalMaxPage : this.state.maxPage;
+    getCurrentMaxPage: function() {
+        return this.props.useExternal
+            ? this.props.externalMaxPage
+            : this.state.maxPage;
     },
     //This takes the props relating to sort and puts them in one object
-    getSortObject: function(){
+    getSortObject: function() {
         return {
             enableSort: this.props.enableSort,
             changeSort: this.changeSort,
@@ -623,152 +747,213 @@ var Griddle = React.createClass({
             sortAscendingComponent: this.props.sortAscendingComponent,
             sortDescendingComponent: this.props.sortDescendingComponent,
             sortDefaultComponent: this.props.sortDefaultComponent
-        }
+        };
     },
-	_toggleSelectAll: function () {
-		var visibleRows = this.getDataForRender(this.getCurrentResults(), this.columnSettings.getColumns(), true),
+    _toggleSelectAll: function() {
+        var visibleRows = this.getDataForRender(
+                this.getCurrentResults(),
+                this.columnSettings.getColumns(),
+                true
+            ),
             newIsSelectAllChecked = !this.state.isSelectAllChecked,
-			newSelectedRowIds = JSON.parse(JSON.stringify(this.state.selectedRowIds));
+            newSelectedRowIds = JSON.parse(
+                JSON.stringify(this.state.selectedRowIds)
+            );
 
         var self = this;
-		forEach(visibleRows, function (row) {
-            self._updateSelectedRowIds(row[self.props.uniqueIdentifier], newSelectedRowIds, newIsSelectAllChecked);
-		}, this);
+        forEach(
+            visibleRows,
+            function(row) {
+                self._updateSelectedRowIds(
+                    row[self.props.uniqueIdentifier],
+                    newSelectedRowIds,
+                    newIsSelectAllChecked
+                );
+            },
+            this
+        );
 
-		this.setState({
-			isSelectAllChecked: newIsSelectAllChecked,
-			selectedRowIds: newSelectedRowIds
-		});
-	},
-	_toggleSelectRow: function (row, isChecked) {
-
-        var visibleRows = this.getDataForRender(this.getCurrentResults(), this.columnSettings.getColumns(), true),
-            newSelectedRowIds = JSON.parse(JSON.stringify(this.state.selectedRowIds));
-
-        this._updateSelectedRowIds(row[this.props.uniqueIdentifier], newSelectedRowIds, isChecked);
-
-		this.setState({
-			isSelectAllChecked: this._getAreAllRowsChecked(newSelectedRowIds, map(visibleRows, this.props.uniqueIdentifier)),
+        this.setState({
+            isSelectAllChecked: newIsSelectAllChecked,
             selectedRowIds: newSelectedRowIds
-		});
-	},
-    _updateSelectedRowIds: function (id, selectedRowIds, isChecked) {
+        });
+    },
+    _toggleSelectRow: function(row, isChecked) {
+        var visibleRows = this.getDataForRender(
+                this.getCurrentResults(),
+                this.columnSettings.getColumns(),
+                true
+            ),
+            newSelectedRowIds = JSON.parse(
+                JSON.stringify(this.state.selectedRowIds)
+            );
 
+        this._updateSelectedRowIds(
+            row[this.props.uniqueIdentifier],
+            newSelectedRowIds,
+            isChecked
+        );
+
+        this.setState({
+            isSelectAllChecked: this._getAreAllRowsChecked(
+                newSelectedRowIds,
+                map(visibleRows, this.props.uniqueIdentifier)
+            ),
+            selectedRowIds: newSelectedRowIds
+        });
+    },
+    _updateSelectedRowIds: function(id, selectedRowIds, isChecked) {
         var isFound;
 
-        if(isChecked) {
-            isFound = find(selectedRowIds, function (item) {
+        if (isChecked) {
+            isFound = find(selectedRowIds, function(item) {
                 return id === item;
             });
 
-            if(isFound === undefined) {
+            if (isFound === undefined) {
                 selectedRowIds.push(id);
             }
         } else {
             selectedRowIds.splice(selectedRowIds.indexOf(id), 1);
         }
     },
-	_getIsSelectAllChecked: function () {
-
-		return this.state.isSelectAllChecked;
-	},
-    _getAreAllRowsChecked: function (selectedRowIds, visibleRowIds) {
-
+    _getIsSelectAllChecked: function() {
+        return this.state.isSelectAllChecked;
+    },
+    _getAreAllRowsChecked: function(selectedRowIds, visibleRowIds) {
         var i, isFound;
 
-        if(selectedRowIds.length !== visibleRowIds.length) {
+        if (selectedRowIds.length !== visibleRowIds.length) {
             return false;
         }
 
-        for(i = 0; i < selectedRowIds.length; i++) {
-            isFound = find(visibleRowIds, function (visibleRowId) {
+        for (i = 0; i < selectedRowIds.length; i++) {
+            isFound = find(visibleRowIds, function(visibleRowId) {
                 return selectedRowIds[i] === visibleRowId;
             });
 
-            if(isFound === undefined) {
+            if (isFound === undefined) {
                 return false;
             }
         }
 
         return true;
     },
-    _getIsRowChecked: function (row) {
-
-        return this.state.selectedRowIds.indexOf(row[this.props.uniqueIdentifier]) > -1 ? true : false;
+    _getIsRowChecked: function(row) {
+        return this.state.selectedRowIds.indexOf(
+            row[this.props.uniqueIdentifier]
+        ) > -1
+            ? true
+            : false;
     },
-	getSelectedRowIds: function () {
+    getSelectedRowIds: function() {
+        return this.state.selectedRowIds;
+    },
+    _resetSelectedRows: function() {
+        this.setState({
+            isSelectAllChecked: false,
+            selectedRowIds: []
+        });
+    },
+    //This takes the props relating to multiple selection and puts them in one object
+    getMultipleSelectionObject: function() {
+        return {
+            isMultipleSelection: find(this.props.results, function(result) {
+                return "children" in result;
+            })
+                ? false
+                : this.props.isMultipleSelection, //does not support subgrids
+            toggleSelectAll: this._toggleSelectAll,
+            getIsSelectAllChecked: this._getIsSelectAllChecked,
 
-		return this.state.selectedRowIds;
-	},
-	_resetSelectedRows: function () {
-
-		this.setState({
-			isSelectAllChecked: false,
-			selectedRowIds: []
-		})
-	},
-	//This takes the props relating to multiple selection and puts them in one object
-	getMultipleSelectionObject: function(){
-
-		return {
-			isMultipleSelection: find(this.props.results, function (result) { return 'children' in result}) ? false : this.props.isMultipleSelection, //does not support subgrids
-			toggleSelectAll: this._toggleSelectAll,
-			getIsSelectAllChecked: this._getIsSelectAllChecked,
-
-			toggleSelectRow: this._toggleSelectRow,
-			getSelectedRowIds: this.getSelectedRowIds,
+            toggleSelectRow: this._toggleSelectRow,
+            getSelectedRowIds: this.getSelectedRowIds,
             getIsRowChecked: this._getIsRowChecked
-		}
-	},
-    isInfiniteScrollEnabled: function(){
-      // If a custom pager is included, don't allow for infinite scrolling.
-      if (this.props.useCustomPagerComponent) {
-        return false;
-      }
-
-      // Otherwise, send back the property.
-      return this.props.enableInfiniteScroll;
+        };
     },
-    getClearFixStyles: function(){
+    isInfiniteScrollEnabled: function() {
+        // If a custom pager is included, don't allow for infinite scrolling.
+        if (this.props.useCustomPagerComponent) {
+            return false;
+        }
+
+        // Otherwise, send back the property.
+        return this.props.enableInfiniteScroll;
+    },
+    getClearFixStyles: function() {
         return {
             clear: "both",
             display: "table",
             width: "100%"
         };
     },
-    getSettingsStyles: function(){
-       return {
-            "float": "left",
+    getSettingsStyles: function() {
+        return {
+            float: "left",
             width: "50%",
             textAlign: "right"
         };
     },
-    getFilterStyles: function(){
+    getFilterStyles: function() {
         return {
-            "float": "left",
+            float: "left",
             width: "50%",
             textAlign: "left",
             color: "#222",
             minHeight: "1px"
         };
     },
-    getFilter: function(){
-     return ((this.props.showFilter && this.shouldUseCustomGridComponent() === false) ?
-        ( this.props.useCustomFilterComponent ?
-         <CustomFilterContainer changeFilter={this.setFilter} placeholderText={this.props.filterPlaceholderText} customFilterComponent={this.props.customFilterComponent} results={this.props.results} currentResults={this.getCurrentResults()} /> :
-         <GridFilter changeFilter={this.setFilter} placeholderText={this.props.filterPlaceholderText} />) :
-        "");
+    getFilter: function() {
+        return this.props.showFilter &&
+            this.shouldUseCustomGridComponent() === false ? (
+            this.props.useCustomFilterComponent ? (
+                <CustomFilterContainer
+                    changeFilter={this.setFilter}
+                    placeholderText={this.props.filterPlaceholderText}
+                    customFilterComponent={this.props.customFilterComponent}
+                    results={this.props.results}
+                    currentResults={this.getCurrentResults()}
+                />
+            ) : (
+                <GridFilter
+                    changeFilter={this.setFilter}
+                    placeholderText={this.props.filterPlaceholderText}
+                />
+            )
+        ) : (
+            ""
+        );
     },
-    getSettings: function(){
-        return (this.props.showSettings ?
-            <button type="button" className={this.props.settingsToggleClassName} onClick={this.toggleColumnChooser}
-                style={this.props.useGriddleStyles ? { background: "none", border: "none", padding: 0, margin: 0, fontSize: 14} : null}>
-                    {this.props.settingsText}{this.props.settingsIconComponent}
-            </button> :
-            "");
+    getSettings: function() {
+        return this.props.showSettings ? (
+            <button
+                type="button"
+                className={this.props.settingsToggleClassName}
+                onClick={this.toggleColumnChooser}
+                style={
+                    this.props.useGriddleStyles
+                        ? {
+                              background: "none",
+                              border: "none",
+                              padding: 0,
+                              margin: 0,
+                              fontSize: 14
+                          }
+                        : null
+                }
+            >
+                {this.props.settingsText}
+                {this.props.settingsIconComponent}
+            </button>
+        ) : (
+            ""
+        );
     },
-    getTopSection: function(filter, settings){
-        if (this.props.showFilter === false && this.props.showSettings === false){
+    getTopSection: function(filter, settings) {
+        if (
+            this.props.showFilter === false &&
+            this.props.showSettings === false
+        ) {
             return "";
         }
 
@@ -776,120 +961,241 @@ var Griddle = React.createClass({
             settingsStyles = null,
             topContainerStyles = null;
 
-        if(this.props.useGriddleStyles){
+        if (this.props.useGriddleStyles) {
             filterStyles = this.getFilterStyles();
-            settingsStyles= this.getSettingsStyles();
+            settingsStyles = this.getSettingsStyles();
 
             topContainerStyles = this.getClearFixStyles();
         }
 
-       return (
-        <div className="top-section" style={topContainerStyles}>
-            <div className="griddle-filter" style={filterStyles}>
-               {filter}
+        return (
+            <div className="top-section" style={topContainerStyles}>
+                <div className="griddle-filter" style={filterStyles}>
+                    {filter}
+                </div>
+                <div className="griddle-settings-toggle" style={settingsStyles}>
+                    {settings}
+                </div>
             </div>
-            <div className="griddle-settings-toggle" style={settingsStyles}>
-                {settings}
-            </div>
-        </div>);
+        );
     },
-    getPagingSection: function(currentPage, maxPage){
-        if ((this.props.showPager && !this.isInfiniteScrollEnabled() && !this.shouldUseCustomGridComponent()) === false) {
+    getPagingSection: function(currentPage, maxPage) {
+        if (
+            (this.props.showPager &&
+                !this.isInfiniteScrollEnabled() &&
+                !this.shouldUseCustomGridComponent()) === false
+        ) {
             return undefined;
         }
 
         return (
-          <div className="griddle-footer">
-              {this.props.useCustomPagerComponent ?
-                  <CustomPaginationContainer next={this.nextPage} previous={this.previousPage} currentPage={currentPage} maxPage={maxPage} setPage={this.setPage} nextText={this.props.nextText} previousText={this.props.previousText} customPagerComponent={this.props.customPagerComponent}/> :
-                  <GridPagination useGriddleStyles={this.props.useGriddleStyles} next={this.nextPage} previous={this.previousPage} nextClassName={this.props.nextClassName} nextIconComponent={this.props.nextIconComponent} previousClassName={this.props.previousClassName} previousIconComponent={this.props.previousIconComponent} currentPage={currentPage} maxPage={maxPage} setPage={this.setPage} nextText={this.props.nextText} previousText={this.props.previousText}/>
-              }
-          </div>
+            <div className="griddle-footer">
+                {this.props.useCustomPagerComponent ? (
+                    <CustomPaginationContainer
+                        next={this.nextPage}
+                        previous={this.previousPage}
+                        currentPage={currentPage}
+                        maxPage={maxPage}
+                        setPage={this.setPage}
+                        nextText={this.props.nextText}
+                        previousText={this.props.previousText}
+                        customPagerComponent={this.props.customPagerComponent}
+                    />
+                ) : (
+                    <GridPagination
+                        useGriddleStyles={this.props.useGriddleStyles}
+                        next={this.nextPage}
+                        previous={this.previousPage}
+                        nextClassName={this.props.nextClassName}
+                        nextIconComponent={this.props.nextIconComponent}
+                        previousClassName={this.props.previousClassName}
+                        previousIconComponent={this.props.previousIconComponent}
+                        currentPage={currentPage}
+                        maxPage={maxPage}
+                        setPage={this.setPage}
+                        nextText={this.props.nextText}
+                        previousText={this.props.previousText}
+                    />
+                )}
+            </div>
         );
     },
-    getColumnSelectorSection: function(keys, cols){
+    getColumnSelectorSection: function(keys, cols) {
         return this.state.showColumnChooser ? (
-            <GridSettings columns={keys} selectedColumns={cols} setColumns={this.setColumns} settingsText={this.props.settingsText}
-             settingsIconComponent={this.props.settingsIconComponent} maxRowsText={this.props.maxRowsText} setPageSize={this.setPageSize}
-             showSetPageSize={!this.shouldUseCustomGridComponent()} resultsPerPage={this.state.resultsPerPage} enableToggleCustom={this.props.enableToggleCustom}
-             toggleCustomComponent={this.toggleCustomComponent} useCustomComponent={this.shouldUseCustomRowComponent() || this.shouldUseCustomGridComponent()}
-             useGriddleStyles={this.props.useGriddleStyles} enableCustomFormatText={this.props.enableCustomFormatText} columnMetadata={this.props.columnMetadata} />
-        ) : "";
+            <GridSettings
+                columns={keys}
+                selectedColumns={cols}
+                setColumns={this.setColumns}
+                settingsText={this.props.settingsText}
+                settingsIconComponent={this.props.settingsIconComponent}
+                maxRowsText={this.props.maxRowsText}
+                setPageSize={this.setPageSize}
+                showSetPageSize={!this.shouldUseCustomGridComponent()}
+                resultsPerPage={this.state.resultsPerPage}
+                enableToggleCustom={this.props.enableToggleCustom}
+                toggleCustomComponent={this.toggleCustomComponent}
+                useCustomComponent={
+                    this.shouldUseCustomRowComponent() ||
+                    this.shouldUseCustomGridComponent()
+                }
+                useGriddleStyles={this.props.useGriddleStyles}
+                enableCustomFormatText={this.props.enableCustomFormatText}
+                columnMetadata={this.props.columnMetadata}
+            />
+        ) : (
+            ""
+        );
     },
-    getCustomGridSection: function(){
-        return <this.props.customGridComponent data={this.props.results} className={this.props.customGridComponentClassName} {...this.props.gridMetadata} />
+    getCustomGridSection: function() {
+        return (
+            <this.props.customGridComponent
+                data={this.props.results}
+                className={this.props.customGridComponentClassName}
+                {...this.props.gridMetadata}
+            />
+        );
     },
-    getCustomRowSection: function(data, cols, meta, pagingContent, globalData){
-        return <div><CustomRowComponentContainer data={data} columns={cols} metadataColumns={meta} globalData={globalData}
-            className={this.props.customRowComponentClassName} customComponent={this.props.customRowComponent}
-            style={this.props.useGriddleStyles ? this.getClearFixStyles() : null} />{this.props.showPager&&pagingContent}</div>
+    getCustomRowSection: function(data, cols, meta, pagingContent, globalData) {
+        return (
+            <div>
+                <CustomRowComponentContainer
+                    data={data}
+                    columns={cols}
+                    metadataColumns={meta}
+                    globalData={globalData}
+                    className={this.props.customRowComponentClassName}
+                    customComponent={this.props.customRowComponent}
+                    style={
+                        this.props.useGriddleStyles
+                            ? this.getClearFixStyles()
+                            : null
+                    }
+                />
+                {this.props.showPager && pagingContent}
+            </div>
+        );
     },
-    getStandardGridSection: function(data, cols, meta, pagingContent, hasMorePages){
+    getStandardGridSection: function(
+        data,
+        cols,
+        meta,
+        pagingContent,
+        hasMorePages
+    ) {
         var sortProperties = this.getSortObject();
-		var multipleSelectionProperties = this.getMultipleSelectionObject();
+        var multipleSelectionProperties = this.getMultipleSelectionObject();
 
         // no data section
         var showNoData = this.shouldShowNoDataSection(data);
-        var noDataSection =  this.getNoDataSection();
+        var noDataSection = this.getNoDataSection();
 
-        return (<div className='griddle-body'><GridTable useGriddleStyles={this.props.useGriddleStyles}
-                noDataSection={noDataSection}
-                showNoData={showNoData}
-                columnSettings={this.columnSettings}
-                rowSettings = {this.rowSettings}
-                sortSettings={sortProperties}
-                multipleSelectionSettings={multipleSelectionProperties}
-                filterByColumn={this.filterByColumn}
-                isSubGriddle={this.props.isSubGriddle}
-                useGriddleIcons={this.props.useGriddleIcons}
-                useFixedLayout={this.props.useFixedLayout}
-                showPager={this.props.showPager}
-                pagingContent={pagingContent}
-                data={data}
-                className={this.props.tableClassName}
-                enableInfiniteScroll={this.isInfiniteScrollEnabled()}
-                nextPage={this.nextPage}
-                showTableHeading={this.props.showTableHeading}
-                useFixedHeader={this.props.useFixedHeader}
-                parentRowCollapsedClassName={this.props.parentRowCollapsedClassName}
-                parentRowExpandedClassName={this.props.parentRowExpandedClassName}
-                parentRowCollapsedComponent={this.props.parentRowCollapsedComponent}
-                parentRowExpandedComponent={this.props.parentRowExpandedComponent}
-                bodyHeight={this.props.bodyHeight}
-                paddingHeight={this.props.paddingHeight}
-                rowHeight={this.props.rowHeight}
-                infiniteScrollLoadTreshold={this.props.infiniteScrollLoadTreshold}
-                externalLoadingComponent={this.props.externalLoadingComponent}
-                externalIsLoading={this.props.externalIsLoading}
-                hasMorePages={hasMorePages}
-                onRowClick={this.props.onRowClick}/></div>)
+        return (
+            <div className="griddle-body">
+                <GridTable
+                    useGriddleStyles={this.props.useGriddleStyles}
+                    noDataSection={noDataSection}
+                    showNoData={showNoData}
+                    columnSettings={this.columnSettings}
+                    rowSettings={this.rowSettings}
+                    sortSettings={sortProperties}
+                    multipleSelectionSettings={multipleSelectionProperties}
+                    filterByColumn={this.filterByColumn}
+                    isSubGriddle={this.props.isSubGriddle}
+                    useGriddleIcons={this.props.useGriddleIcons}
+                    useFixedLayout={this.props.useFixedLayout}
+                    showPager={this.props.showPager}
+                    pagingContent={pagingContent}
+                    data={data}
+                    className={this.props.tableClassName}
+                    enableInfiniteScroll={this.isInfiniteScrollEnabled()}
+                    nextPage={this.nextPage}
+                    showTableHeading={this.props.showTableHeading}
+                    useFixedHeader={this.props.useFixedHeader}
+                    parentRowCollapsedClassName={
+                        this.props.parentRowCollapsedClassName
+                    }
+                    parentRowExpandedClassName={
+                        this.props.parentRowExpandedClassName
+                    }
+                    parentRowCollapsedComponent={
+                        this.props.parentRowCollapsedComponent
+                    }
+                    parentRowExpandedComponent={
+                        this.props.parentRowExpandedComponent
+                    }
+                    bodyHeight={this.props.bodyHeight}
+                    paddingHeight={this.props.paddingHeight}
+                    rowHeight={this.props.rowHeight}
+                    infiniteScrollLoadTreshold={
+                        this.props.infiniteScrollLoadTreshold
+                    }
+                    externalLoadingComponent={
+                        this.props.externalLoadingComponent
+                    }
+                    externalIsLoading={this.props.externalIsLoading}
+                    hasMorePages={hasMorePages}
+                    onRowClick={this.props.onRowClick}
+                />
+            </div>
+        );
     },
-    getContentSection: function(data, cols, meta, pagingContent, hasMorePages, globalData){
-        if(this.shouldUseCustomGridComponent() && this.props.customGridComponent !== null){
-           return this.getCustomGridSection();
-        } else if(this.shouldUseCustomRowComponent()){
-            return this.getCustomRowSection(data, cols, meta, pagingContent, globalData);
+    getContentSection: function(
+        data,
+        cols,
+        meta,
+        pagingContent,
+        hasMorePages,
+        globalData
+    ) {
+        if (
+            this.shouldUseCustomGridComponent() &&
+            this.props.customGridComponent !== null
+        ) {
+            return this.getCustomGridSection();
+        } else if (this.shouldUseCustomRowComponent()) {
+            return this.getCustomRowSection(
+                data,
+                cols,
+                meta,
+                pagingContent,
+                globalData
+            );
         } else {
-            return this.getStandardGridSection(data, cols, meta, pagingContent, hasMorePages);
+            return this.getStandardGridSection(
+                data,
+                cols,
+                meta,
+                pagingContent,
+                hasMorePages
+            );
         }
     },
-    getNoDataSection: function(){
+    getNoDataSection: function() {
         if (this.props.customNoDataComponent != null) {
-            return (<div className={this.props.noDataClassName}><this.props.customNoDataComponent /></div>);
+            return (
+                <div className={this.props.noDataClassName}>
+                    <this.props.customNoDataComponent />
+                </div>
+            );
         }
-        return (<GridNoData noDataMessage={this.props.noDataMessage} />);
+        return <GridNoData noDataMessage={this.props.noDataMessage} />;
     },
-    shouldShowNoDataSection: function(results){
+    shouldShowNoDataSection: function(results) {
         if (this.props.allowEmptyGrid) {
-          return false;
+            return false;
         }
 
-        return (this.props.useExternal === false && (typeof results === 'undefined' || results.length === 0 )) ||
-            (this.props.useExternal === true && this.props.externalIsLoading === false && results.length === 0);
+        return (
+            (this.props.useExternal === false &&
+                (typeof results === "undefined" || results.length === 0)) ||
+            (this.props.useExternal === true &&
+                this.props.externalIsLoading === false &&
+                results.length === 0)
+        );
     },
     render: function() {
         var that = this,
-        results = this.getCurrentResults();  // Attempt to assign to the filtered results, if we have any.
+            results = this.getCurrentResults(); // Attempt to assign to the filtered results, if we have any.
 
         var headerTableClassName = this.props.tableClassName + " table-header";
 
@@ -918,29 +1224,47 @@ var Griddle = React.createClass({
         var maxPage = this.getCurrentMaxPage();
 
         // Determine if we need to enable infinite scrolling on the table.
-        var hasMorePages = (currentPage + 1) < maxPage;
+        var hasMorePages = currentPage + 1 < maxPage;
 
         // Grab the paging content if it's to be displayed
         var pagingContent = this.getPagingSection(currentPage, maxPage);
 
-        var resultContent = this.getContentSection(data, cols, meta, pagingContent, hasMorePages, this.props.globalData);
+        var resultContent = this.getContentSection(
+            data,
+            cols,
+            meta,
+            pagingContent,
+            hasMorePages,
+            this.props.globalData
+        );
 
         var columnSelector = this.getColumnSelectorSection(keys, cols);
 
-        var gridClassName = this.props.gridClassName.length > 0 ? "griddle " + this.props.gridClassName : "griddle";
+        var gridClassName =
+            this.props.gridClassName.length > 0
+                ? "griddle " + this.props.gridClassName
+                : "griddle";
         //add custom to the class name so we can style it differently
-        gridClassName += this.shouldUseCustomRowComponent() ? " griddle-custom" : "";
+        gridClassName += this.shouldUseCustomRowComponent()
+            ? " griddle-custom"
+            : "";
 
         return (
             <div className={gridClassName}>
                 {topSection}
                 {columnSelector}
-                <div className="griddle-container" style={this.props.useGriddleStyles&&!this.props.isSubGriddle? { border: "1px solid #DDD"} : null }>
+                <div
+                    className="griddle-container"
+                    style={
+                        this.props.useGriddleStyles && !this.props.isSubGriddle
+                            ? { border: "1px solid #DDD" }
+                            : null
+                    }
+                >
                     {resultContent}
                 </div>
             </div>
         );
-
     }
 });
 

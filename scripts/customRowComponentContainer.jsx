@@ -5,34 +5,42 @@
 
    See License / Disclaimer https://raw.githubusercontent.com/DynamicTyped/Griddle/master/LICENSE
 */
-var React = require('react');
+var React = require("react");
+var createReactClass = require("create-react-class");
 
-var CustomRowComponentContainer = React.createClass({
-  getDefaultProps: function(){
-    return{
-      "data": [],
-      "metadataColumns": [],
-      "className": "",
-      "customComponent": {},
-      "globalData": {}
-    }
+var CustomRowComponentContainer = createReactClass({
+  getDefaultProps: function() {
+    return {
+      data: [],
+      metadataColumns: [],
+      className: "",
+      customComponent: {},
+      globalData: {}
+    };
   },
   render: function() {
     var that = this;
 
-    if (typeof that.props.customComponent !== 'function'){
+    if (typeof that.props.customComponent !== "function") {
       console.log("Couldn't find valid template.");
-      return (<div className={this.props.className}></div>);
+      return <div className={this.props.className} />;
     }
 
-    var nodes = this.props.data.map(function(row, index){
-        return <that.props.customComponent data={row} metadataColumns={that.props.metadataColumns} key={index} globalData={that.props.globalData} />
+    var nodes = this.props.data.map(function(row, index) {
+      return (
+        <that.props.customComponent
+          data={row}
+          metadataColumns={that.props.metadataColumns}
+          key={index}
+          globalData={that.props.globalData}
+        />
+      );
     });
 
-    var footer = this.props.showPager&&this.props.pagingContent;
+    var footer = this.props.showPager && this.props.pagingContent;
     return (
       <div className={this.props.className} style={this.props.style}>
-          {nodes}
+        {nodes}
       </div>
     );
   }
